@@ -1,0 +1,11 @@
+extensions:
+	security: Librette\SecurityNamespaces\DI\SecurityExtension
+services:
+	fooInitializer: LibretteTests\SecurityNamespace\MyInitializer
+	fooAuthenticator: Nette\Security\SimpleAuthenticator([])
+	fooNamespace:
+		class: Librette\SecurityNamespaces\SecurityNamespace(foo, @fooAuthenticator, null, @fooInitializer)
+		tags: [librette.security.namespace]
+	barNamespace:
+		class: Librette\SecurityNamespaces\SecurityNamespace(bar)
+		tags: [librette.security.namespace]
