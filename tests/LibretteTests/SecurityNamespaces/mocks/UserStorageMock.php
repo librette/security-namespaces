@@ -13,6 +13,9 @@ class UserStorageMock implements INamespaceUserStorage
 
 	protected $identity;
 
+	public $logoutReason;
+
+	public $expiration;
 
 	public function getNamespace()
 	{
@@ -52,13 +55,13 @@ class UserStorageMock implements INamespaceUserStorage
 
 	function setExpiration($time, $flags = 0)
 	{
-
+		$this->expiration = func_get_args();
 	}
 
 
 	function getLogoutReason()
 	{
-		return NULL;
+		return $this->logoutReason;
 	}
 
 }
