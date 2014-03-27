@@ -22,6 +22,8 @@ class UserStorage extends Object implements INamespaceUserStorage
 	/** @var string fallback */
 	protected $namespace;
 
+	/** @var IIdentity[] */
+	protected $initializedIdentities = array();
 
 	/**
 	 * @param \Nette\Security\IUserStorage $userStorage
@@ -96,11 +98,14 @@ class UserStorage extends Object implements INamespaceUserStorage
 	public function getIdentity()
 	{
 		$identity = $this->innerUserStorage->getIdentity();
-		if ($identity && $this->identityInitializer) {
-			$identity = $this->identityInitializer->initialize($identity);
+		if (!$identity || !$this->identityInitializer) {
+			return $identity;
+		}
+		if (!isset($this->initializedIdentities[$hash = spl_object_hash($identity)])) {
+			$this->initializedIdentities[$hash] = $this->identityInitializer->initialize($identity);
 		}
 
-		return $identity;
+		return $this->initializedIdentities[$hash];
 	}
 
 }
