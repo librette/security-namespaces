@@ -7,11 +7,10 @@ use Nette\DI\ServiceDefinition;
 /**
  * @author David Matejka
  */
-class SecurityExtension extends CompilerExtension
+class SecurityNamespacesExtension extends CompilerExtension
 {
 
 	const SECURITY_NAMESPACE_TAG = 'librette.security.namespace';
-
 
 
 	public function loadConfiguration()
@@ -20,6 +19,9 @@ class SecurityExtension extends CompilerExtension
 
 		$builder->addDefinition($this->prefix('namespaceDetector'))
 				->setClass('Librette\SecurityNamespaces\NamespaceDetector');
+
+		$builder->addDefinition($this->prefix('namespaceProxy'))
+				->setClass('\Librette\SecurityNamespaces\CurrentNamespaceProxy');
 
 		$builder->addDefinition($this->prefix('authenticator'))
 				->setClass('Librette\SecurityNamespaces\NamespaceAwareAuthenticator');
@@ -59,6 +61,7 @@ class SecurityExtension extends CompilerExtension
 		$namespaceManager = $builder->getDefinition($this->prefix('namespaceManager'));
 		foreach ($builder->findByTag(self::SECURITY_NAMESPACE_TAG) as $name => $null) {
 			$nsDefinition = $builder->getDefinition($name);
+			$nsDefinition->setAutowired(FALSE);
 			$this->normalizeNamespaceArguments($nsDefinition);
 			$namespaceManager->addSetup('addNamespace', array($nsDefinition));
 		}
@@ -73,9 +76,9 @@ class SecurityExtension extends CompilerExtension
 	 */
 	private function normalizeNamespaceArguments(ServiceDefinition $namespaceDefinition)
 	{
-		$args = $namespaceDefinition->factory->arguments + array(1 => NULL, NULL, $this->prefix('@dummyIdentityInitializer'));
+		$args = $namespaceDefinition->getFactory()->arguments + array(1 => NULL, NULL, $this->prefix('@dummyIdentityInitializer'));
 		ksort($args);
-		$namespaceDefinition->factory->arguments = $args;
+		$namespaceDefinition->getFactory()->arguments = $args;
 		$this->disableAutowiring($args);
 	}
 

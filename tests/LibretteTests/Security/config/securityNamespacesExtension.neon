@@ -1,5 +1,5 @@
 extensions:
-	security: Librette\SecurityNamespaces\DI\SecurityExtension
+	security: Librette\SecurityNamespaces\DI\SecurityNamespacesExtension
 services:
 	fooInitializer: LibretteTests\SecurityNamespace\MyInitializer
 	fooAuthenticator: Nette\Security\SimpleAuthenticator([])

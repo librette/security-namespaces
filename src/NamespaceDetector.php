@@ -26,6 +26,7 @@ class NamespaceDetector extends Object implements INamespaceDetector
 		$this->namespaceManager = $namespaceManager;
 	}
 
+
 	public function getNamespace()
 	{
 		return $this->namespaceManager->getNamespace($this->userStorage->getNamespace());

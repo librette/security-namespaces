@@ -10,24 +10,22 @@ use Nette\Security\IAuthorizator;
 class NamespaceAwareAuthorizator extends Object implements IAuthorizator
 {
 
-	/** @var INamespaceDetector */
-	protected $namespaceDetector;
+	/** @var ISecurityNamespace */
+	protected $namespace;
 
 
 	/**
-	 * @param INamespaceDetector $namespaceDetector
+	 * @param ISecurityNamespace $namespace
 	 */
-	public function __construct(INamespaceDetector $namespaceDetector)
+	public function __construct(ISecurityNamespace $namespace)
 	{
-		$this->namespaceDetector = $namespaceDetector;
+		$this->namespace = $namespace;
 	}
 
 
 	function isAllowed($role, $resource, $privilege)
 	{
-		$securityNamespace = $this->namespaceDetector->getNamespace();
-
-		return $securityNamespace->getAuthorizator()->isAllowed($role, $resource, $privilege);
+		return $this->namespace->getAuthorizator()->isAllowed($role, $resource, $privilege);
 	}
 
 }

@@ -18,7 +18,7 @@ class NamespaceManager extends Object
 
 	public function getNamespace($name)
 	{
-		if(!isset($this->namespaces[$name])) {
+		if (!isset($this->namespaces[$name])) {
 			throw new InvalidStateException("Security namespace $name not found");
 		}
 

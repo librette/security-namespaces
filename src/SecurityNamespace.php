@@ -9,7 +9,7 @@ use Nette\Security\IAuthorizator;
 /**
  * @author David Matejka
  */
-class SecurityNamespace extends Object
+class SecurityNamespace extends Object implements ISecurityNamespace
 {
 
 	/** @var IAuthenticator */
@@ -40,22 +40,15 @@ class SecurityNamespace extends Object
 	}
 
 
-	/**
-	 * @return mixed
-	 */
 	public function getName()
 	{
 		return $this->name;
 	}
 
 
-	/**
-	 * @return IAuthenticator
-	 * @throws InvalidStateException
-	 */
 	public function getAuthenticator()
 	{
-		if(!$this->authenticator) {
+		if (!$this->authenticator) {
 			throw new InvalidStateException("Authenticator has not been set.");
 		}
 
@@ -63,19 +56,12 @@ class SecurityNamespace extends Object
 	}
 
 
-	/**
-	 * @return bool
-	 */
 	public function hasAuthenticator()
 	{
 		return (bool) $this->authenticator;
 	}
 
 
-	/**
-	 * @return IAuthorizator
-	 * @throws InvalidStateException
-	 */
 	public function getAuthorizator()
 	{
 		if (!$this->authorizator) {
@@ -86,22 +72,15 @@ class SecurityNamespace extends Object
 	}
 
 
-	/**
-	 * @return bool
-	 */
 	public function hasAuthorizator()
 	{
 		return (bool) $this->authorizator;
 	}
 
 
-	/**
-	 * @throws InvalidStateException
-	 * @return IIdentityInitializer
-	 */
 	public function getIdentityInitializer()
 	{
-		if(!$this->identityInitializer) {
+		if (!$this->identityInitializer) {
 			throw new InvalidStateException("EntityIdentity initializer has not been set.");
 		}
 
@@ -109,9 +88,6 @@ class SecurityNamespace extends Object
 	}
 
 
-	/**
-	 * @return bool
-	 */
 	public function hasIdentityInitializer()
 	{
 		return (bool) $this->identityInitializer;

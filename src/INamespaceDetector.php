@@ -9,7 +9,7 @@ interface INamespaceDetector
 {
 
 	/**
-	 * @return SecurityNamespace
+	 * @return SecurityNamespace current namespace
 	 * @throws InvalidStateException
 	 */
 	public function getNamespace();

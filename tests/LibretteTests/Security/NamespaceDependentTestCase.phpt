@@ -1,6 +1,7 @@
 <?php
 namespace LibretteTests\SecurityNamespace;
 
+use Librette\SecurityNamespaces\CurrentNamespaceProxy;
 use Librette\SecurityNamespaces\Identity\IdentityInitializerProxy;
 use Librette\SecurityNamespaces\Identity\IIdentityInitializer;
 use Librette\SecurityNamespaces\Identity\IIdentityInitializerAccessor;
@@ -92,8 +93,8 @@ class NamespaceAwareTestCase extends TestCase
 		$barAuthenticator->result = $barIdentity = new Identity('admin');
 		$namespaceManager->addNamespace(new SecurityNamespace('bar', $barAuthenticator));
 		$namespaceDetector = new NamespaceDetector($userStorage, $namespaceManager);
-
-		$namespaceAwareAuthenticator = new NamespaceAwareAuthenticator($namespaceDetector);
+		$namespaceProxy = new CurrentNamespaceProxy($namespaceDetector);
+		$namespaceAwareAuthenticator = new NamespaceAwareAuthenticator($namespaceProxy);
 		$user = new User($userStorage, $namespaceAwareAuthenticator);
 
 		$userStorage->setNamespace('foo');
@@ -118,7 +119,8 @@ class NamespaceAwareTestCase extends TestCase
 		$barAuthorizator->result = TRUE;
 		$namespaceManager->addNamespace(new SecurityNamespace('bar', NULL, $barAuthorizator));
 		$namespaceDetector = new NamespaceDetector($userStorage, $namespaceManager);
-		$namespaceAwareAuthorizator = new NamespaceAwareAuthorizator($namespaceDetector);
+		$namespaceProxy = new CurrentNamespaceProxy($namespaceDetector);
+		$namespaceAwareAuthorizator = new NamespaceAwareAuthorizator($namespaceProxy);
 		$user = new User($userStorage, NULL, $namespaceAwareAuthorizator);
 
 		$userStorage->setNamespace('foo');
@@ -142,9 +144,9 @@ class NamespaceAwareTestCase extends TestCase
 		$barInitializer = new InitializerMock();
 		$barInitializer->result = $barIdentity = new Identity(2);
 		$namespaceManager->addNamespace(new SecurityNamespace('bar', NULL, NULL, $barInitializer));
-
 		$namespaceDetector = new NamespaceDetector($userStorage, $namespaceManager);
-		$accessor->initializer = $namespaceAwareInitializer = new NamespaceAwareIdentityInitializer($namespaceDetector);
+		$namespaceProxy = new CurrentNamespaceProxy($namespaceDetector);
+		$accessor->initializer = $namespaceAwareInitializer = new NamespaceAwareIdentityInitializer($namespaceProxy);
 
 		$userStorage->identity = new Identity(3);
 		$userStorage->setNamespace('foo');

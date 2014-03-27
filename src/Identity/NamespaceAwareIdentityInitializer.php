@@ -1,7 +1,7 @@
 <?php
 namespace Librette\SecurityNamespaces\Identity;
 
-use Librette\SecurityNamespaces\INamespaceDetector;
+use Librette\SecurityNamespaces\ISecurityNamespace;
 use Nette\Object;
 use Nette\Security\IIdentity;
 
@@ -11,22 +11,22 @@ use Nette\Security\IIdentity;
 class NamespaceAwareIdentityInitializer extends Object implements IIdentityInitializer
 {
 
-	/** @var INamespaceDetector */
-	protected $namespaceDetector;
+	/** @var ISecurityNamespace */
+	protected $namespace;
 
 
 	/**
-	 * @param INamespaceDetector $namespaceDetector
+	 * @param ISecurityNamespace $namespace
 	 */
-	public function __construct(INamespaceDetector $namespaceDetector)
+	public function __construct(ISecurityNamespace $namespace)
 	{
-		$this->namespaceDetector = $namespaceDetector;
+		$this->namespace = $namespace;
 	}
 
 
 	public function initialize(IIdentity $identity)
 	{
-		return $this->namespaceDetector->getNamespace()->getIdentityInitializer()->initialize($identity);
+		return $this->namespace->getIdentityInitializer()->initialize($identity);
 	}
 
 }

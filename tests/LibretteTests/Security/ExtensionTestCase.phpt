@@ -24,7 +24,7 @@ class ExtensionTestCase extends TestCase
 	public function setUp()
 	{
 		$configurator = new Configurator();
-		$configurator->addConfig(__DIR__ . '/config/securityExtension.neon');
+		$configurator->addConfig(__DIR__ . '/config/securityNamespacesExtension.neon');
 		$configurator->setTempDirectory(TEMP_DIR);
 		$this->container = $configurator->createContainer();
 	}

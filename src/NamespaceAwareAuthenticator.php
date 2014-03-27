@@ -10,24 +10,22 @@ use Nette\Security\IAuthenticator;
 class NamespaceAwareAuthenticator extends Object implements IAuthenticator
 {
 
-	/** @var INamespaceDetector */
-	protected $namespaceDetector;
+	/** @var ISecurityNamespace */
+	protected $namespace;
 
 
 	/**
-	 * @param INamespaceDetector $namespaceDetector
+	 * @param ISecurityNamespace $namespace
 	 */
-	public function __construct(INamespaceDetector $namespaceDetector)
+	public function __construct(ISecurityNamespace $namespace)
 	{
-		$this->namespaceDetector = $namespaceDetector;
+		$this->namespace = $namespace;
 	}
 
 
 	function authenticate(array $credentials)
 	{
-		$namespace = $this->namespaceDetector->getNamespace();
-
-		return $namespace->getAuthenticator()->authenticate($credentials);
+		return $this->namespace->getAuthenticator()->authenticate($credentials);
 	}
 
 }
