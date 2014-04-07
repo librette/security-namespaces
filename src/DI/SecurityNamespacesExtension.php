@@ -76,9 +76,9 @@ class SecurityNamespacesExtension extends CompilerExtension
 	 */
 	private function normalizeNamespaceArguments(ServiceDefinition $namespaceDefinition)
 	{
-		$args = $namespaceDefinition->getFactory()->arguments + array(1 => NULL, NULL, $this->prefix('@dummyIdentityInitializer'));
+		$args = $namespaceDefinition->factory->arguments + array(1 => NULL, NULL, $this->prefix('@dummyIdentityInitializer'));
 		ksort($args);
-		$namespaceDefinition->getFactory()->arguments = $args;
+		$namespaceDefinition->factory->arguments = $args;
 		$this->disableAutowiring($args);
 	}
 
