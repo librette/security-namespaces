@@ -38,7 +38,7 @@ class UserStorage extends Object implements INamespaceUserStorage
 
 	public function getNamespace()
 	{
-		if ($this->innerUserStorage instanceof INamespaceUserStorage) {
+		if ($this->innerUserStorage instanceof INamespaceUserStorage || $this->innerUserStorage instanceof Http\UserStorage) {
 			return $this->innerUserStorage->getNamespace();
 		}
 
@@ -48,7 +48,7 @@ class UserStorage extends Object implements INamespaceUserStorage
 
 	public function setNamespace($namespace)
 	{
-		if ($this->innerUserStorage instanceof INamespaceUserStorage) {
+		if ($this->innerUserStorage instanceof INamespaceUserStorage || $this->innerUserStorage instanceof Http\UserStorage) {
 			$this->innerUserStorage->setNamespace($namespace);
 		} else {
 			$this->namespace = $namespace;
