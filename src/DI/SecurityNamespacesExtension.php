@@ -47,7 +47,7 @@ class SecurityNamespacesExtension extends CompilerExtension
 		$builder->addDefinition($this->prefix('originalUserStorage'), $builder->getDefinition('nette.userStorage'))
 				->setAutowired(FALSE);
 		$builder->addDefinition($this->prefix('userStorage'))
-				->setClass('Librette\SecurityNamespaces\UserStorage', array($this->prefix('@originalUserStorage')));
+				->setClass('Librette\SecurityNamespaces\UserStorage', [$this->prefix('@originalUserStorage')]);
 
 
 		$builder->addDefinition($this->prefix('namespaceManager'))
@@ -59,11 +59,19 @@ class SecurityNamespacesExtension extends CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$namespaceManager = $builder->getDefinition($this->prefix('namespaceManager'));
-		foreach ($builder->findByTag(self::SECURITY_NAMESPACE_TAG) as $name => $null) {
+		foreach ($builder->findByTag(self::SECURITY_NAMESPACE_TAG) as $name => $args) {
 			$nsDefinition = $builder->getDefinition($name);
 			$nsDefinition->setAutowired(FALSE);
 			$this->normalizeNamespaceArguments($nsDefinition);
-			$namespaceManager->addSetup('addNamespace', array($nsDefinition));
+			if(isset($args['name'])) {
+				$args = is_string($args) ? ['name' => $args] : $args;
+				$builder->addDefinition($this->prefix($name . ".accessor"))
+						->setImplement('\Librette\SecurityNamespaces\INamespaceAccessor')
+						->setFactory('@' . $name);
+				$namespaceManager->addSetup('addNamespaceAccessor', [$args['name'], $this->prefix("@$name.accessor")]);
+			} else {
+				$namespaceManager->addSetup('addNamespace', [$nsDefinition]);
+			}
 		}
 
 		$builder->removeDefinition('nette.userStorage');
@@ -76,7 +84,7 @@ class SecurityNamespacesExtension extends CompilerExtension
 	 */
 	private function normalizeNamespaceArguments(ServiceDefinition $namespaceDefinition)
 	{
-		$args = $namespaceDefinition->factory->arguments + array(1 => NULL, NULL, $this->prefix('@dummyIdentityInitializer'));
+		$args = $namespaceDefinition->factory->arguments + [1 => NULL, NULL, $this->prefix('@dummyIdentityInitializer')];
 		ksort($args);
 		$namespaceDefinition->factory->arguments = $args;
 		$this->disableAutowiring($args);

@@ -9,6 +9,9 @@ class NamespaceManager extends Object
 	/** @var SecurityNamespace[] */
 	protected $namespaces;
 
+	/** @var INamespaceAccessor[] */
+	protected $accessors;
+
 
 	public function addNamespace(SecurityNamespace $namespace)
 	{
@@ -16,10 +19,20 @@ class NamespaceManager extends Object
 	}
 
 
+	public function addNamespaceAccessor($name, INamespaceAccessor $accessor)
+	{
+		$this->accessors[$name] = $accessor;
+	}
+
+
 	public function getNamespace($name)
 	{
 		if (!isset($this->namespaces[$name])) {
-			throw new InvalidStateException("Security namespace $name not found");
+			if (isset($this->accessors[$name])) {
+				$this->namespaces[$name] = $this->accessors[$name]->get();
+			} else {
+				throw new InvalidStateException("Security namespace $name not found");
+			}
 		}
 
 		return $this->namespaces[$name];
