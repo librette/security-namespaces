@@ -8,12 +8,16 @@
 			"homepage": "http://www.matej21.cz"
 		}
 	],
-	"minimum-stability": "dev",
 	"require": {
-		"nette/nette": "@dev"
+		"nette/utils": "~2.2",
+		"nette/security": "~2.2",
+		"nette/http": "~2.2",
+		"nette/di": "~2.2"
 	},
 	"require-dev": {
-		"nette/tester": "@dev"
+		"nette/nette": "~2.2",
+		"nette/tester": "@dev",
+		"tracy/tracy": "@dev"
 	},
 	"autoload": {
 		"psr-4": {
