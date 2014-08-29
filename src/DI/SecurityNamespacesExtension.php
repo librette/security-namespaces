@@ -63,8 +63,8 @@ class SecurityNamespacesExtension extends CompilerExtension
 			$nsDefinition = $builder->getDefinition($name);
 			$nsDefinition->setAutowired(FALSE);
 			$this->normalizeNamespaceArguments($nsDefinition);
-			if(isset($args['name'])) {
-				$args = is_string($args) ? ['name' => $args] : $args;
+			$args = is_string($args) ? ['name' => $args] : $args;
+			if (isset($args['name'])) {
 				$builder->addDefinition($this->prefix($name . ".accessor"))
 						->setImplement('\Librette\SecurityNamespaces\INamespaceAccessor')
 						->setFactory('@' . $name);

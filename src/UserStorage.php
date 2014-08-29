@@ -23,7 +23,8 @@ class UserStorage extends Object implements INamespaceUserStorage
 	protected $namespace;
 
 	/** @var IIdentity[] */
-	protected $initializedIdentities = array();
+	protected $initializedIdentities = [];
+
 
 	/**
 	 * @param \Nette\Security\IUserStorage $userStorage
