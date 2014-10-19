@@ -18,40 +18,40 @@ class SecurityNamespacesExtension extends CompilerExtension
 		$builder = $this->getContainerBuilder();
 
 		$builder->addDefinition($this->prefix('namespaceDetector'))
-				->setClass('Librette\SecurityNamespaces\NamespaceDetector');
+		        ->setClass('Librette\SecurityNamespaces\NamespaceDetector');
 
 		$builder->addDefinition($this->prefix('namespaceProxy'))
-				->setClass('\Librette\SecurityNamespaces\CurrentNamespaceProxy');
+		        ->setClass('\Librette\SecurityNamespaces\CurrentNamespaceProxy');
 
 		$builder->addDefinition($this->prefix('authenticator'))
-				->setClass('Librette\SecurityNamespaces\NamespaceAwareAuthenticator');
+		        ->setClass('Librette\SecurityNamespaces\NamespaceAwareAuthenticator');
 
 		$builder->addDefinition($this->prefix('authorizator'))
-				->setClass('Librette\SecurityNamespaces\NamespaceAwareAuthorizator');
+		        ->setClass('Librette\SecurityNamespaces\NamespaceAwareAuthorizator');
 
 		$builder->addDefinition($this->prefix('dummyIdentityInitializer'))
-				->setClass('Librette\SecurityNamespaces\Identity\DummyIdentityInitializer')
-				->setAutowired(FALSE);
+		        ->setClass('Librette\SecurityNamespaces\Identity\DummyIdentityInitializer')
+		        ->setAutowired(FALSE);
 
 		$builder->addDefinition($this->prefix('identityInitializer'))
-				->setClass('Librette\SecurityNamespaces\Identity\IdentityInitializerProxy');
+		        ->setClass('Librette\SecurityNamespaces\Identity\IdentityInitializerProxy');
 
 		$builder->addDefinition($this->prefix('identityInitializerAccessor'))
-				->setImplement('Librette\SecurityNamespaces\Identity\IIdentityInitializerAccessor')
-				->setFactory($this->prefix('@namespaceAwareIdentityInitializer'));
+		        ->setImplement('Librette\SecurityNamespaces\Identity\IIdentityInitializerAccessor')
+		        ->setFactory($this->prefix('@namespaceAwareIdentityInitializer'));
 
 		$builder->addDefinition($this->prefix('namespaceAwareIdentityInitializer'))
-				->setClass('Librette\SecurityNamespaces\Identity\NamespaceAwareIdentityInitializer')
-				->setAutowired(FALSE);
+		        ->setClass('Librette\SecurityNamespaces\Identity\NamespaceAwareIdentityInitializer')
+		        ->setAutowired(FALSE);
 
 		$builder->addDefinition($this->prefix('originalUserStorage'), $builder->getDefinition('nette.userStorage'))
-				->setAutowired(FALSE);
+		        ->setAutowired(FALSE);
 		$builder->addDefinition($this->prefix('userStorage'))
-				->setClass('Librette\SecurityNamespaces\UserStorage', [$this->prefix('@originalUserStorage')]);
+		        ->setClass('Librette\SecurityNamespaces\UserStorage', [$this->prefix('@originalUserStorage')]);
 
 
 		$builder->addDefinition($this->prefix('namespaceManager'))
-				->setClass('\Librette\SecurityNamespaces\NamespaceManager');
+		        ->setClass('\Librette\SecurityNamespaces\NamespaceManager');
 	}
 
 
@@ -66,8 +66,8 @@ class SecurityNamespacesExtension extends CompilerExtension
 			$args = is_string($args) ? ['name' => $args] : $args;
 			if (isset($args['name'])) {
 				$builder->addDefinition($this->prefix($name . ".accessor"))
-						->setImplement('\Librette\SecurityNamespaces\INamespaceAccessor')
-						->setFactory('@' . $name);
+				        ->setImplement('\Librette\SecurityNamespaces\INamespaceAccessor')
+				        ->setFactory('@' . $name);
 				$namespaceManager->addSetup('addNamespaceAccessor', [$args['name'], $this->prefix("@$name.accessor")]);
 			} else {
 				$namespaceManager->addSetup('addNamespace', [$nsDefinition]);
