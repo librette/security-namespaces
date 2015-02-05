@@ -21,7 +21,7 @@ class SecurityNamespacesExtension extends CompilerExtension
 		        ->setClass('Librette\SecurityNamespaces\NamespaceDetector');
 
 		$builder->addDefinition($this->prefix('namespaceProxy'))
-		        ->setClass('\Librette\SecurityNamespaces\CurrentNamespaceProxy');
+		        ->setClass('Librette\SecurityNamespaces\CurrentNamespaceProxy');
 
 		$builder->addDefinition($this->prefix('authenticator'))
 		        ->setClass('Librette\SecurityNamespaces\NamespaceAwareAuthenticator');
@@ -51,7 +51,7 @@ class SecurityNamespacesExtension extends CompilerExtension
 
 
 		$builder->addDefinition($this->prefix('namespaceManager'))
-		        ->setClass('\Librette\SecurityNamespaces\NamespaceManager');
+		        ->setClass('Librette\SecurityNamespaces\NamespaceManager');
 	}
 
 
@@ -66,7 +66,7 @@ class SecurityNamespacesExtension extends CompilerExtension
 			$args = is_string($args) ? ['name' => $args] : $args;
 			if (isset($args['name'])) {
 				$builder->addDefinition($this->prefix($name . ".accessor"))
-				        ->setImplement('\Librette\SecurityNamespaces\INamespaceAccessor')
+				        ->setImplement('Librette\SecurityNamespaces\INamespaceAccessor')
 				        ->setFactory('@' . $name);
 				$namespaceManager->addSetup('addNamespaceAccessor', [$args['name'], $this->prefix("@$name.accessor")]);
 			} else {
