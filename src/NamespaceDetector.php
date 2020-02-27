@@ -1,12 +1,11 @@
 <?php
 namespace Librette\SecurityNamespaces;
 
-use Nette\Object;
 
 /**
  * @author David Matejka
  */
-class NamespaceDetector extends Object implements INamespaceDetector
+class NamespaceDetector implements INamespaceDetector
 {
 
 	/** @var \Librette\SecurityNamespaces\INamespaceUserStorage */

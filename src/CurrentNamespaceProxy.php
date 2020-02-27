@@ -1,12 +1,10 @@
 <?php
 namespace Librette\SecurityNamespaces;
 
-use Nette\Object;
-
 /**
  * @author David Matejka
  */
-class CurrentNamespaceProxy extends Object implements ISecurityNamespace
+class CurrentNamespaceProxy implements ISecurityNamespace
 {
 
 	/** @var \Librette\SecurityNamespaces\INamespaceDetector */

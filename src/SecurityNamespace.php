@@ -2,14 +2,13 @@
 namespace Librette\SecurityNamespaces;
 
 use Librette\SecurityNamespaces\Identity\IIdentityInitializer;
-use Nette\Object;
 use Nette\Security\IAuthenticator;
 use Nette\Security\IAuthorizator;
 
 /**
  * @author David Matejka
  */
-class SecurityNamespace extends Object implements ISecurityNamespace
+class SecurityNamespace implements ISecurityNamespace
 {
 
 	/** @var IAuthenticator */

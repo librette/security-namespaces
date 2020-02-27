@@ -1,7 +1,6 @@
 <?php
 namespace Librette\SecurityNamespaces\Identity;
 
-use Nette\Object;
 use Nette\Security\IIdentity;
 
 /**
@@ -9,7 +8,7 @@ use Nette\Security\IIdentity;
  *
  * @author David Matejka
  */
-class IdentityInitializerProxy extends Object implements IIdentityInitializer
+class IdentityInitializerProxy implements IIdentityInitializer
 {
 
 	/** @var \Librette\SecurityNamespaces\Identity\IIdentityInitializerAccessor */

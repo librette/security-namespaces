@@ -2,13 +2,12 @@
 namespace Librette\SecurityNamespaces\Identity;
 
 use Librette\SecurityNamespaces\ISecurityNamespace;
-use Nette\Object;
 use Nette\Security\IIdentity;
 
 /**
  * @author David Matejka
  */
-class NamespaceAwareIdentityInitializer extends Object implements IIdentityInitializer
+class NamespaceAwareIdentityInitializer implements IIdentityInitializer
 {
 
 	/** @var ISecurityNamespace */

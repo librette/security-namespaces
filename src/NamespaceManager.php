@@ -1,9 +1,8 @@
 <?php
 namespace Librette\SecurityNamespaces;
 
-use Nette\Object;
 
-class NamespaceManager extends Object
+class NamespaceManager
 {
 
 	/** @var SecurityNamespace[] */

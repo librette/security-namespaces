@@ -3,14 +3,13 @@ namespace Librette\SecurityNamespaces;
 
 use Librette\SecurityNamespaces\Identity\IIdentityInitializer;
 use Nette\Http;
-use Nette\Object;
 use Nette\Security\IIdentity;
 use Nette\Security\IUserStorage;
 
 /**
  * @author David Matejka
  */
-class UserStorage extends Object implements INamespaceUserStorage
+class UserStorage implements INamespaceUserStorage
 {
 
 	/** @var IIdentityInitializer */
@@ -59,7 +58,7 @@ class UserStorage extends Object implements INamespaceUserStorage
 	}
 
 
-	function setAuthenticated($state)
+	function setAuthenticated(bool $state)
 	{
 		$this->innerUserStorage->setAuthenticated($state);
 
@@ -67,7 +66,7 @@ class UserStorage extends Object implements INamespaceUserStorage
 	}
 
 
-	function isAuthenticated()
+	function isAuthenticated(): bool
 	{
 		return $this->innerUserStorage->isAuthenticated();
 	}
@@ -79,7 +78,7 @@ class UserStorage extends Object implements INamespaceUserStorage
 	}
 
 
-	function setExpiration($time, $flags = 0)
+	function setExpiration(?string $time, int $flags = 0)
 	{
 		$this->innerUserStorage->setExpiration($time, $flags);
 
@@ -87,16 +86,13 @@ class UserStorage extends Object implements INamespaceUserStorage
 	}
 
 
-	function getLogoutReason()
+	function getLogoutReason(): ?int
 	{
 		return $this->innerUserStorage->getLogoutReason();
 	}
 
 
-	/**
-	 * @return IIdentity|NULL
-	 */
-	public function getIdentity()
+	public function getIdentity(): ?IIdentity
 	{
 		$identity = $this->innerUserStorage->getIdentity();
 		if (!$identity || !$this->identityInitializer) {

@@ -1,13 +1,13 @@
 <?php
 namespace Librette\SecurityNamespaces;
 
-use Nette\Object;
 use Nette\Security\IAuthenticator;
+use Nette\Security\IIdentity;
 
 /**
  * @author David Matejka
  */
-class NamespaceAwareAuthenticator extends Object implements IAuthenticator
+class NamespaceAwareAuthenticator implements IAuthenticator
 {
 
 	/** @var ISecurityNamespace */
@@ -23,7 +23,7 @@ class NamespaceAwareAuthenticator extends Object implements IAuthenticator
 	}
 
 
-	function authenticate(array $credentials)
+	function authenticate(array $credentials): IIdentity
 	{
 		return $this->namespace->getAuthenticator()->authenticate($credentials);
 	}

@@ -1,13 +1,12 @@
 <?php
 namespace Librette\SecurityNamespaces;
 
-use Nette\Object;
 use Nette\Security\IAuthorizator;
 
 /**
  * @author David Matejka
  */
-class NamespaceAwareAuthorizator extends Object implements IAuthorizator
+class NamespaceAwareAuthorizator implements IAuthorizator
 {
 
 	/** @var ISecurityNamespace */
@@ -23,7 +22,7 @@ class NamespaceAwareAuthorizator extends Object implements IAuthorizator
 	}
 
 
-	function isAllowed($role, $resource, $privilege)
+	function isAllowed($role, $resource, $privilege): bool
 	{
 		return $this->namespace->getAuthorizator()->isAllowed($role, $resource, $privilege);
 	}
